@@ -62,7 +62,10 @@ class Node():
         self.pred.right_suc = self.right_suc
     #self has two successors - most complex case
     else:
-      #TODO: check this link http://www.cs.toronto.edu/~krueger/cscB63h/lectures/tut03.txt
+      # find the most left node, substitute the value and exclude the most left node
+      most_left = self.find_most_left(self.right_suc)
+      self.value = most_left.value
+      most_left.auto_delete()
       pass
   
   def which_suc_side(self):
@@ -84,3 +87,10 @@ class Node():
       return "left"
     else:
       return "right"
+      
+  def find_most_left(self, node):
+    """ Find the most left node on the right subtree """
+    if node.left_suc is None:
+      return node
+    else:
+      return self.find_most_left(node.left_suc)
