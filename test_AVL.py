@@ -38,6 +38,16 @@ class TestUM(unittest.TestCase):
     def test_insert_raise_error(self):
         with self.assertRaises(already_exist):
             self.avl2.insert(2)
+    
+    def test_delete(self):
+        self.avl2.insert(1)
+        self.avl2.insert(3)
+        # test left deletion
+        self.avl2.delete(1)
+        self.assertEqual(self.avl2.root.left_suc, None)
+        # test right deletion
+        self.avl2.delete(3)
+        self.assertEqual(self.avl2.root.right_suc, None)
  
 if __name__ == '__main__':
     unittest.main()

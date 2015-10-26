@@ -50,15 +50,18 @@ class AVL():
   def find_last_match(self, node, value):
     """ Find the last node on tracking the most approximate value """
     while True:
+      # try to find the right subtree
       if value > node.value:
         if node.right_suc is not None:
-          return find_last_match(node.right_suc, value)
+          return self.find_last_match(node.right_suc, value)
         else:
           return node
+      # try to find the left subtree
       elif value < node.value:
         if node.left_suc is not None:
-          return find_last_match(node.left_suc, value)
+          return self.find_last_match(node.left_suc, value)
         else:
           return node
+      # value found
       else:
         return node
