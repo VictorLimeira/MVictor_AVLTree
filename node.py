@@ -62,15 +62,16 @@ class Node():
         self.pred.right_suc = self.right_suc
     #self has two successors - most complex case
     else:
-      # find the most left node, substitute the value and exclude the most left node
+      # find the most left node on the right subtree
+      # substitute the value and exclude the most left node
       most_left = self.find_most_left(self.right_suc)
       self.value = most_left.value
       most_left.auto_delete()
       pass
   
   def which_suc_side(self):
-    """ Shows if the node has successors return zero,
-        left or right or two to represent """
+    """ Shows if the node has successors
+        return zero, left or right, or two to represent successors """
     if self.left_suc and self.right_suc:
       return "two"
     elif self.left_suc or self.right_suc:
