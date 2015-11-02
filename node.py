@@ -35,15 +35,22 @@ class Node():
   def auto_delete(self):
     """ Auto delete the self node """
     suc_side = self.which_suc_side()
-    pred_side = self.which_pred_side()
+    if self.pred is not None:
+      pred_side = self.which_pred_side()
+    else:
+      pred_side = None
     
     #self has no successor
     if suc_side is "zero":
       if pred_side is "left":
         self.pred.left_suc = None
         return
-      else:
+      elif pred_side is "right":
         self.pred.right_suc = None
+        return
+      #self is the root node
+      else:
+        self.value = None
         return
     #self has one successor, and it is left
     elif suc_side is "left":

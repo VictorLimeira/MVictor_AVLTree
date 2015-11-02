@@ -42,6 +42,9 @@ class AVL():
       node_to_delete = self.find_last_match(self.root, value)
       if value is node_to_delete.value:
         node_to_delete.auto_delete()
+        #no root detected, delete root node
+        if self.root.value is None:
+          self.root = None
       else:
         raise node_not_found()
     return

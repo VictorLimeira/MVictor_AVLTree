@@ -48,6 +48,10 @@ class TestUM(unittest.TestCase):
         # test right deletion
         self.avl2.delete(3)
         self.assertEqual(self.avl2.root.right_suc, None)
+        
+    def test_delete_root(self):
+        self.avl2.delete(2)
+        self.assertEqual(self.avl2.root, None)
  
 if __name__ == '__main__':
     unittest.main()
