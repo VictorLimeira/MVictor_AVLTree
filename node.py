@@ -24,12 +24,16 @@ class Node():
   def add_suc(self, value):
     """add_suc will add the successor of the current node following the
     AVL tree rules"""
+    #added node to the right subtree
     if(value > self.value):
       self.right_suc = Node(value)
       self.right_suc.pred = self
+      self.update_factor_insert()
+    #added node to the left subtree
     elif(value < self.value):
       self.left_suc = Node(value)
       self.left_suc.pred = self
+      self.update_factor_insert()
     else:
       raise already_exist("Value already exists.")
   
@@ -92,7 +96,12 @@ class Node():
       
   def which_pred_side(self):
     """ Indicates which side self node is according to its predecessor"""
-    if self.pred.left_suc is self:
+    try:
+      left = self.pred.left_suc
+    except:
+      return None
+      
+    if left is self:
       return "left"
     else:
       return "right"
@@ -103,3 +112,21 @@ class Node():
       return node
     else:
       return self.find_most_left(node.left_suc)
+  
+  def update_factor_insert(self):
+    """ Update the factor of a insertion """
+    if self.which_pred_side() is "left":
+      self.pred.factor += 1
+      if self.pred.factor is 0:
+        return
+      else:
+        return self.pred.update_factor_insert()
+    elif self.which_pred_side() is "right":
+      self.pred.factor -= 1
+      if self.pred.factor is 0:
+        return
+      else:
+        return self.pred.update_factor_insert()
+    #root detected
+    else:
+      return
