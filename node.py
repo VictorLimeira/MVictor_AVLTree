@@ -19,6 +19,7 @@ class Node():
     self.pred = None
     self.left_suc = None
     self.right_suc = None
+    self.factor = 0
     
   def add_suc(self, value):
     """add_suc will add the successor of the current node following the
