@@ -28,12 +28,12 @@ class Node():
     if(value > self.value):
       self.right_suc = Node(value)
       self.right_suc.pred = self
-      self.update_factor_insert()
+      self.right_suc.update_factor_insert()
     #added node to the left subtree
     elif(value < self.value):
       self.left_suc = Node(value)
       self.left_suc.pred = self
-      self.update_factor_insert()
+      self.left_suc.update_factor_insert()
     else:
       raise already_exist("Value already exists.")
   
