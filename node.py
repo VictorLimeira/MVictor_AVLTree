@@ -49,10 +49,10 @@ class Node():
     if suc_side is "zero":
       if pred_side is "left":
         self.pred.left_suc = None
-        return
+        return self.update_factor_delete()
       elif pred_side is "right":
         self.pred.right_suc = None
-        return
+        return self.update_factor_delete()
       #self is the root node
       else:
         self.value = None
@@ -62,16 +62,19 @@ class Node():
       #test which side of the predecessor will be updated
       if pred_side is "left":
         self.pred.left_suc = self.left_suc
-        return
+        return self.update_factor_delete()
       else:
         self.pred.right_suc = self.left_suc
+        return self.update_factor_delete()
     #self has one successor, and it is right
     elif suc_side is "right":
       #test which side of the predecessor will be updated
       if pred_side is "left":
         self.pred.left_suc = self.right_suc
+        return self.update_factor_delete()
       else:
         self.pred.right_suc = self.right_suc
+        return self.update_factor_delete()
     #self has two successors - most complex case
     else:
       # find the most left node on the right subtree
@@ -79,7 +82,7 @@ class Node():
       most_left = self.find_most_left(self.right_suc)
       self.value = most_left.value
       most_left.auto_delete()
-      pass
+      return self.update_factor_delete()
   
   def which_suc_side(self):
     """ Shows if the node has successors
@@ -127,6 +130,32 @@ class Node():
         return
       else:
         return self.pred.update_factor_insert()
+    #root detected
+    else:
+      return
+  
+  def update_factor_delete(self):
+    """ Update the factor of a deletion """
+    #left subtree deleted
+    if self.pred.value > self.value:
+      self.pred.factor -= 1
+      if self.pred.factor is not 0:
+        return
+      else:
+        if self.pred:
+          return self.pred.update_factor_insert()
+        else:
+          return
+    #right subtree deleted
+    elif self.pred.value < self.value:
+      self.pred.factor += 1
+      if self.pred.factor is not 0:
+        return
+      else:
+        if self.pred:
+          return self.pred.update_factor_insert()
+        else:
+          return
     #root detected
     else:
       return
