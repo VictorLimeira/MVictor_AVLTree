@@ -13,5 +13,10 @@ from node import *
 from avl import *
 
 if __name__ == '__main__':
-  node = Node(15)
-  print(node.value)
+  avl = AVL(1)
+  avl.insert(2)
+  avl.insert(3)
+  avl.insert(4)
+  avl.insert(5)
+  print(avl.print_inorder())
+  avl.print_visual_tree()

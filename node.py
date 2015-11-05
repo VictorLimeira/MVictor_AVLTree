@@ -120,13 +120,13 @@ class Node():
     """ Update the factor of a insertion """
     if self.which_pred_side() is "left":
       self.pred.factor += 1
-      if self.pred.factor is 0:
+      if self.pred.factor is 0 or self.pred.factor is 2:
         return
       else:
         return self.pred.update_factor_insert()
     elif self.which_pred_side() is "right":
       self.pred.factor -= 1
-      if self.pred.factor is 0:
+      if self.pred.factor is 0 or self.pred.factor is -2:
         return
       else:
         return self.pred.update_factor_insert()
@@ -159,3 +159,51 @@ class Node():
     #root detected
     else:
       return
+  
+  def rotate_left(self):
+    """ Rotates left and test its subcases """
+    #self is the top node
+    #clone nodes that will be changed
+    bot = self.right_suc.right_suc
+    mid = self.right_suc
+    top = self
+    top_left = self.left_suc
+    mid_left = mid.left_suc
+    
+    #swap values of top and mid
+    top.value, mid.value = mid.value, top.value
+    
+    #update links to mid turns into top left:
+    # 1 - Bot predecessor turns into top
+    bot.pred = top
+    # 2 - Top right successor turns into bot
+    top.right_suc = bot
+    # 3 - Deal with the lefts
+    # Two lefts
+    if mid.left_suc and top.left_suc:
+      # Change mid and top's lefts
+      top_left.pred = mid
+      top_left.right_suc = mid.left_suc
+      mid_left.pred = top_left
+      # Mid left link turns into top's left
+      mid.left_suc = top_left
+      # Update top factor
+      top.factor += 2
+      mid.factor += 1
+    # One left
+    elif mid.left_suc or top.left_suc:
+      # TODO
+      pass
+    # No lefts
+    else:
+      top.left_suc = mid
+      mid.pred = top
+      mid.right_suc = None
+      # Update factor
+      top.factor += 2
+      mid.factor += 1
+      return
+  
+  def rotate_right(self):
+    """ Rotates right and test its subcases """
+    pass

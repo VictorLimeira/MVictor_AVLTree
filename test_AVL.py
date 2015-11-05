@@ -52,6 +52,13 @@ class TestUM(unittest.TestCase):
     def test_delete_root(self):
         self.avl2.delete(2)
         self.assertEqual(self.avl2.root, None)
+    
+    def test_left_rotation_no_lefts(self):
+        self.avl1.insert(2)
+        self.avl1.insert(3)
+        self.assertEqual(self.avl1.root.right_suc.value, 3)
+        self.assertEqual(self.avl1.root.left_suc.value, 1)
+        self.assertEqual(self.avl1.root.value, 2)
  
 if __name__ == '__main__':
     unittest.main()

@@ -32,7 +32,9 @@ class AVL():
       return
     
     node_to_add = self.find_last_match(self.root, value)
-    return node_to_add.add_suc(value)
+    node_to_add.add_suc(value)
+    self.check_imbalance(node_to_add)
+    return
   
   def delete(self, value):
     """ Delete the node that matches the value """
@@ -68,3 +70,52 @@ class AVL():
       # value found
       else:
         return node
+  
+  def check_imbalance(self, node):
+    if -1 <= node.factor <= 1:
+      #balanced
+      #check next (root or not)
+      if node.pred is not None:
+        return self.check_imbalance(node.pred)
+      else:
+        return
+    else:
+      #imbalanced
+      #test if it is right or left imbalance
+      if node.factor is -2:
+        return node.rotate_left()
+      else:
+        return node.rotate_right()
+  
+  def print_inorder(self, node=None):
+    if node is None:
+      node = self.root
+      
+    inorder_values = []
+    
+    if node.left_suc:
+      inorder_values += self.print_inorder(node.left_suc)
+    
+    inorder_values += [node.value]
+    
+    if node.right_suc:
+      inorder_values +=self.print_inorder(node.right_suc)
+    
+    return inorder_values
+  
+  def print_visual_tree(self, depth=0, node=None):
+    if node is None:
+      node = self.root
+    
+    # Print right branch
+    if node.right_suc is not None:
+      self.print_visual_tree(depth + 1, node.right_suc)
+
+    # Print own value
+    print("    " * depth + str(node.value) + "(" + str(node.factor) + ")")
+
+    # Print left branch
+    if node.left_suc is not None:
+      self.print_visual_tree(depth + 1, node.left_suc)
+    
+    return
