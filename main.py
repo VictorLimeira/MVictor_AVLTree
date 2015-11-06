@@ -8,8 +8,6 @@ IFRN - Natal/RN - Brazil
 
 Contact: victor.limeira@outlook.com
 """
-
-from node import *
 from avl import *
 
 if __name__ == '__main__':
