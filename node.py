@@ -207,3 +207,17 @@ class Node():
   def rotate_right(self):
     """ Rotates right and test its subcases """
     pass
+  
+  def find_value(self, value):
+    if self.value is value:
+      return "Valor encontrado"
+    elif self.value > value:
+      if self.left_suc:
+        return self.left_suc.find_value(value)
+      else:
+        return "Valor nao encontrado"
+    elif self.value < value:
+      if self.right_suc:
+        return self.right_suc.find_value(value)
+      else:
+        return "Valor nao encontrado"

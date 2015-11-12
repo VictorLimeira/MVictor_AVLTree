@@ -72,6 +72,8 @@ class AVL():
         return node
   
   def check_imbalance(self, node):
+    """ Check if the node and its predecessors is unbalanced and execute the
+    rotatinos """
     if -1 <= node.factor <= 1:
       #balanced
       #check next (root or not)
@@ -88,6 +90,7 @@ class AVL():
         return node.rotate_right()
   
   def print_inorder(self, node=None):
+    """ Return a list with inorder elements of the tree """
     if node is None:
       node = self.root
       
@@ -104,6 +107,7 @@ class AVL():
     return inorder_values
   
   def print_visual_tree(self, depth=0, node=None):
+    """ Print the tree and each node factor in a visual way """
     if node is None:
       node = self.root
     
@@ -119,3 +123,10 @@ class AVL():
       self.print_visual_tree(depth + 1, node.left_suc)
     
     return
+  
+  def search(self, value):
+    """ Return if the element was found or not """
+    if self.root:
+      print self.root.find_value(value)
+    else:
+      print("Empty tree")
