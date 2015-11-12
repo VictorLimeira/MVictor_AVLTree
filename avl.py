@@ -107,14 +107,14 @@ class AVL():
     if node is None:
       node = self.root
     
-    # Print right branch
+    # Print right node
     if node.right_suc is not None:
       self.print_visual_tree(depth + 1, node.right_suc)
 
-    # Print own value
+    # Print self node
     print("    " * depth + str(node.value) + "(" + str(node.factor) + ")")
 
-    # Print left branch
+    # Print left node
     if node.left_suc is not None:
       self.print_visual_tree(depth + 1, node.left_suc)
     
