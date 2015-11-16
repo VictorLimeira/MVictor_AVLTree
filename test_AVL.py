@@ -18,6 +18,7 @@ class TestUM(unittest.TestCase):
     def setUp(self):
         self.avl1 = AVL(1)
         self.avl2 = AVL(2)
+        self.avl30 = AVL(30)
         self.avl_empty = AVL()
  
     def test_creation(self):
@@ -59,6 +60,18 @@ class TestUM(unittest.TestCase):
         self.assertEqual(self.avl1.root.right_suc.value, 3)
         self.assertEqual(self.avl1.root.left_suc.value, 1)
         self.assertEqual(self.avl1.root.value, 2)
+    
+    def test_left_rotation_with_lefts(self):
+        self.avl30.insert(40)
+        self.avl30.insert(29)
+        self.avl30.insert(39)
+        self.avl30.insert(41)
+        self.avl30.insert(43)
+        self.assertEqual(self.avl30.root.value, 40)
+        self.assertEqual(self.avl30.root.right_suc.value, 41)
+        self.assertEqual(self.avl30.root.left_suc.value, 30)
+        self.assertEqual(self.avl30.root.left_suc.right_suc.value, 39)
+        self.assertEqual(self.avl30.root.left_suc.left_suc.value, 29)
  
 if __name__ == '__main__':
     unittest.main()

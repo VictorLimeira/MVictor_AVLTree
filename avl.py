@@ -29,7 +29,7 @@ class AVL():
     """ Add a value to the AVL tree"""
     if self.root is None:
       self.root = Node(value)
-      return
+      return None
     
     node_to_add = self.find_last_match(self.root, value)
     node_to_add.add_suc(value)
@@ -80,7 +80,7 @@ class AVL():
       if node.pred is not None:
         return self.check_imbalance(node.pred)
       else:
-        return
+        return None
     else:
       #imbalanced
       #test if it is right or left imbalance

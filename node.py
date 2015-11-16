@@ -56,7 +56,7 @@ class Node():
       #self is the root node
       else:
         self.value = None
-        return
+        return None
     #self has one successor, and it is left
     elif suc_side is "left":
       #test which side of the predecessor will be updated
@@ -121,18 +121,18 @@ class Node():
     if self.which_pred_side() is "left":
       self.pred.factor += 1
       if self.pred.factor is 0 or self.pred.factor is 2:
-        return
+        return None
       else:
         return self.pred.update_factor_insert()
     elif self.which_pred_side() is "right":
       self.pred.factor -= 1
       if self.pred.factor is 0 or self.pred.factor is -2:
-        return
+        return None
       else:
         return self.pred.update_factor_insert()
     #root detected
     else:
-      return
+      return None
   
   def update_factor_delete(self):
     """ Update the factor of a deletion """
@@ -140,69 +140,68 @@ class Node():
     if self.pred.value > self.value:
       self.pred.factor -= 1
       if self.pred.factor is not 0:
-        return
+        return None
       else:
         if self.pred:
           return self.pred.update_factor_insert()
         else:
-          return
+          return None
     #right subtree deleted
     elif self.pred.value < self.value:
       self.pred.factor += 1
       if self.pred.factor is not 0:
-        return
+        return None
       else:
         if self.pred:
           return self.pred.update_factor_insert()
         else:
-          return
+          return None
     #root detected
     else:
       return
   
   def rotate_left(self):
     """ Rotates left and test its subcases """
-    #self is the top node
-    #clone nodes that will be changed
-    bot = self.right_suc.right_suc
-    mid = self.right_suc
+    # O       -> top
+    #  \
+    #   O     -> left => it will becomes the top's left
+    #    \
+    #     O   -> right => it will becomes the top's right
+    #
+    # Self is the top node
+    # Clone nodes that will be changed
     top = self
-    top_left = self.left_suc
-    mid_left = mid.left_suc
+    left = self.right_suc
+    right = self.right_suc.right_suc
     
-    #swap values of top and mid
-    top.value, mid.value = mid.value, top.value
+    # Swap values of top and future left
+    top.value, left.value = left.value, top.value
     
-    #update links to mid turns into top left:
-    # 1 - Bot predecessor turns into top
-    bot.pred = top
-    # 2 - Top right successor turns into bot
-    top.right_suc = bot
-    # 3 - Deal with the lefts
-    # Two lefts
-    if mid.left_suc and top.left_suc:
-      # Change mid and top's lefts
-      top_left.pred = mid
-      top_left.right_suc = mid.left_suc
-      mid_left.pred = top_left
-      # Mid left link turns into top's left
-      mid.left_suc = top_left
-      # Update top factor
-      top.factor += 2
-      mid.factor += 1
-    # One left
-    elif mid.left_suc or top.left_suc:
-      # TODO
-      pass
-    # No lefts
+    # Turns the future left into real left
+    if left.left_suc:
+      left.right_suc = left.left_suc
     else:
-      top.left_suc = mid
-      mid.pred = top
-      mid.right_suc = None
-      # Update factor
-      top.factor += 2
-      mid.factor += 1
-      return
+      left.right_suc = None
+    if top.left_suc:
+      left.left_suc = top.left_suc
+    else:
+      left.left_suc = None
+    # Update predecessor for the same left
+    if left.right_suc:
+      left.right_suc.pred = left
+    if left.left_suc:
+      left.left_suc.pred = left
+    # Update the predecessor of the new left
+    top.left_suc = left
+    
+    # Turns the future right into real right
+    right.pred = top
+    top.right_suc = right
+    
+    # Update factors
+    top.factor += 2
+    left.factor += 1
+    return None
   
   def rotate_right(self):
     """ Rotates right and test its subcases """
