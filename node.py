@@ -195,17 +195,60 @@ class Node():
     top.left_suc = left
     
     # Turns the future right into real right
-    right.pred = top
+    if right:
+      right.pred = top
     top.right_suc = right
     
     # Update factors
     top.factor += 2
-    left.factor += 1
+    if right:
+      left.factor += 1
     return None
   
   def rotate_right(self):
     """ Rotates right and test its subcases """
-    pass
+    #     O    -> top
+    #    /
+    #   O     -> right => it will becomes the top's right
+    #  /  
+    # O       -> left => it will becomes the top's left
+    #
+    # Self is the top node
+    # Clone nodes that will be changed
+    top = self
+    right = self.left_suc
+    left = self.left_suc.left_suc
+    
+    # Swap values of top and future left
+    top.value, right.value = right.value, top.value
+    
+    # Turns the future right into real right
+    if right.right_suc:
+      right.left_suc = right.right_suc
+    else:
+      right.left_suc = None
+    if top.right_suc:
+      right.right_suc = top.right_suc
+    else:
+      right.right_suc = None
+    # Update predecessor for the same right
+    if right.left_suc:
+      right.left_suc.pred = right
+    if right.right_suc:
+      right.right_suc.pred = right
+    # Update the predecessor of the new right
+    top.right_suc = right
+    
+    # Turns the future left into real left
+    if left:
+      left.pred = top
+    top.left_suc = left
+    
+    # Update factors
+    top.factor -= 2
+    if left:
+      right.factor -= 1
+    return None
   
   def find_value(self, value):
     if self.value is value:

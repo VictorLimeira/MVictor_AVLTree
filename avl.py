@@ -73,7 +73,7 @@ class AVL():
   
   def check_imbalance(self, node):
     """ Check if the node and its predecessors is unbalanced and execute the
-    rotatinos """
+    rotations """
     if -1 <= node.factor <= 1:
       #balanced
       #check next (root or not)
@@ -83,10 +83,14 @@ class AVL():
         return None
     else:
       #imbalanced
-      #test if it is right or left imbalance
+      #test if it is right or left imbalance and its subcases of double rotation
       if node.factor is -2:
+        if node.right_suc.factor is 1:
+          node.right_suc.rotate_right()
         return node.rotate_left()
       else:
+        if node.left_suc.factor is -1:
+          node.left_suc.rotate_left()
         return node.rotate_right()
   
   def print_inorder(self, node=None):

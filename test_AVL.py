@@ -72,6 +72,18 @@ class TestUM(unittest.TestCase):
         self.assertEqual(self.avl30.root.left_suc.value, 30)
         self.assertEqual(self.avl30.root.left_suc.right_suc.value, 39)
         self.assertEqual(self.avl30.root.left_suc.left_suc.value, 29)
+    
+    def test_right_rotation_with_rights(self):
+        self.avl30.insert(29)
+        self.avl30.insert(39)
+        self.avl30.insert(28)
+        self.avl30.insert(27)
+        self.avl30.insert(26)
+        self.assertEqual(self.avl30.root.value, 28)
+        self.assertEqual(self.avl30.root.right_suc.value, 30)
+        self.assertEqual(self.avl30.root.left_suc.value, 27)
+        self.assertEqual(self.avl30.root.right_suc.left_suc.value, 29)
+        self.assertEqual(self.avl30.root.right_suc.right_suc.value, 39)
  
 if __name__ == '__main__':
     unittest.main()
